@@ -1,8 +1,12 @@
 {
-  "name": "weather-statistics",
+  "name": "traffic-statistics",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -10,13 +14,21 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "axios": "^0.20.0",
+    "leaflet": "^1.7.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "react-axios": "^2.0.3",
+    "react-dom": "^16.14.0",
+    "react-leaflet": "^2.7.0",
+    "react-leaflet-markercluster": "^2.0.0",
+    "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
+    "redux": "^4.0.5",
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --max_old_space_size=4096 build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
