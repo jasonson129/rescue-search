@@ -1,35 +1,54 @@
 import React, { useState } from "react";
 import HeadBar from "./components/HeadBar";
+import DrawerSlide from "./components/DrawerSlide";
+import DialogSlide from "./components/DialogSlide";
 import LeafletMap from "./components/LeafletMap";
+import PieChart from "./components/PieChart";
 import styled from "@emotion/styled";
 import "./App.css";
-
-const drawerWidth = 300;
 
 const headBarHeight = 50;
 
 const App = () => {
-  const [open, setOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const View = styled.div`
+  const Map = styled.div`
     position: relative;
     top: ${headBarHeight}px;
     height: calc(100vh - ${headBarHeight}px);
-    left: ${open ? drawerWidth : `0`}px;
-    width: calc(100vw - ${open ? drawerWidth : `0`}px);
   `;
 
   return (
     <>
       <HeadBar
-        open={open}
-        setOpen={setOpen}
-        headBarHeight={headBarHeight}
-        drawerWidth={drawerWidth}
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        height={headBarHeight}
       />
-      <View>
+      <DialogSlide
+        open={dialogOpen}
+        setOpen={setDialogOpen}
+        title={"Set Query Date"}
+      />
+      <DrawerSlide
+        open={drawerOpen}
+        setOpen={setDrawerOpen}
+        anchor={"left"}
+        style={{
+          top: headBarHeight,
+          resize: "horizontal",
+          backgroundColor: "#5999dad9",
+          overflow: "auto",
+        }}
+      >
+        <PieChart />
+      </DrawerSlide>
+      <Map>
         <LeafletMap />
-      </View>
+      </Map>
     </>
   );
 };

@@ -5,14 +5,14 @@ import styled from "@emotion/styled";
 import state from "./assert/taiwanState.json";
 import axios from "axios";
 
-const CustomMap = styled(Map)`
-  height: 100%;
-`;
-
 const LeafletMap = (props) => {
   React.useEffect(() => {
     fetchData("2020-01-01", "2020-10-31");
   }, []);
+
+  const CustomMap = styled(Map)`
+    height: 100%;
+  `;
 
   const [marker, setMarker] = React.useState<any[]>();
 

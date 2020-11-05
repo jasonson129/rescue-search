@@ -1,32 +1,20 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Drawer,
-  Grid,
-  TextField,
-  Select,
-  MenuItem,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Slide,
-  Button,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import AssessmentIcon from "@material-ui/icons/Assessment";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import styled from "@emotion/styled";
-import DialogSlide from "../DialogSlide";
 
 const HeadBar = (props) => {
-  const { open, setOpen, headBarHeight, drawerWidth } = props;
+  const {
+    drawerOpen,
+    setDrawerOpen,
+    dialogOpen,
+    setDialogOpen,
+    height,
+  } = props;
 
-  const defaultHeadBarHeight = 50,
-    defaultDrawerWidth = 240;
+  const defaultHeight = 50;
 
   const Root = styled.div`
     border: none;
@@ -35,13 +23,13 @@ const HeadBar = (props) => {
     left: 0;
     right: 0;
     flex-grow: 1;
-    height: ${headBarHeight || defaultHeadBarHeight}px;
+    height: ${height || defaultHeight}px;
   `;
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       appBar: {
-        height: headBarHeight || defaultHeadBarHeight,
+        height: height || defaultHeight,
       },
       toolBar: {
         margin: 0,
@@ -55,18 +43,6 @@ const HeadBar = (props) => {
       title: {
         flexGrow: 1,
       },
-      drawer: {
-        top: headBarHeight || defaultHeadBarHeight,
-        width: drawerWidth || defaultDrawerWidth,
-        flexShrink: 0,
-      },
-      drawerPaper: {
-        top: headBarHeight || defaultHeadBarHeight,
-        width: drawerWidth || defaultDrawerWidth,
-        backgroundImage:
-          "linear-gradient(to right, #5999da70, #5999da70), url('menu-background.jpg')",
-        backgroundSize: "cover",
-      },
     })
   );
 
@@ -75,13 +51,13 @@ const HeadBar = (props) => {
   const toggleDrawer = () => (
     event: React.KeyboardEvent | React.MouseEvent
   ) => {
-    setOpen(!open);
+    setDrawerOpen(!drawerOpen);
   };
 
   const toggleDialog = () => (
     event: React.KeyboardEvent | React.MouseEvent
   ) => {
-    setOpen(!open);
+    setDialogOpen(!dialogOpen);
   };
 
   return (
@@ -93,7 +69,7 @@ const HeadBar = (props) => {
             className={classes.iconButton}
             color="inherit"
             aria-label="menu"
-            onClick={toggleDrawer()}
+            onClick={toggleDialog()}
           >
             <SearchIcon />
           </IconButton>
@@ -102,29 +78,6 @@ const HeadBar = (props) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor={"left"}
-        open={false}
-        onClose={toggleDrawer()}
-        classes={{ paper: classes.drawerPaper }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Typography variant="h5" color="inherit" className={classes.title}>
-              縣市
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Select>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-            </Select>
-          </Grid>
-        </Grid>
-      </Drawer>
     </Root>
   );
 };
