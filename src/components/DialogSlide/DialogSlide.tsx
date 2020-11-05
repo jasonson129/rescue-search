@@ -28,8 +28,10 @@ const Transition = React.forwardRef(function Transition(
 const DialogSlide = (props) => {
   const dispatch = useDispatch();
   const { open, setOpen, title } = props;
-  const [startDate, setStartDate] = useState(new Date("2020-11-03"));
-  const [endDate, setEndDate] = useState(new Date("2020-11-03"));
+  const [startDate, setStartDate] = useState<Date>(
+    new Date(new Date().setMonth(new Date().getMonth() - 3))
+  );
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
   const fetchData = async () => {
     axios

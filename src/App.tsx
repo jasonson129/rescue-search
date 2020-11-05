@@ -42,8 +42,13 @@ const App = () => {
   );
 
   useEffect(() => {
-    console.log("useEffect");
-    fetchData("2020-01-01", "2020-10-31");
+    let startDate = new Date();
+    startDate.setMonth(startDate.getMonth() - 3);
+    let endDate = new Date();
+    fetchData(
+      startDate.toISOString().substring(0, 10),
+      endDate.toISOString().substring(0, 10)
+    );
   }, [fetchData]);
 
   const Root = styled.div`

@@ -48,15 +48,11 @@ const HeadBar = (props) => {
 
   const classes = useStyles();
 
-  const toggleDrawer = () => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
+  const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const toggleDialog = () => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
+  const toggleDialog = () => {
     setDialogOpen(!dialogOpen);
   };
 
@@ -69,7 +65,7 @@ const HeadBar = (props) => {
             className={classes.iconButton}
             color="inherit"
             aria-label="menu"
-            onClick={toggleDialog()}
+            onClick={toggleDialog}
           >
             <SearchIcon />
           </IconButton>
@@ -78,7 +74,7 @@ const HeadBar = (props) => {
             className={classes.iconButton}
             color="inherit"
             aria-label="menu"
-            onClick={toggleDrawer()}
+            onClick={toggleDrawer}
           >
             <AssessmentIcon />
           </IconButton>

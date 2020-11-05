@@ -48,14 +48,14 @@ const LeafletMap = (props) => {
       return (
         <MarkerClusterGroup>
           {markers.map((prop, key) => {
+            const { position, service, date, location } = prop;
             return (
-              <Marker position={prop.position} key={key}>
+              <Marker position={position} key={key}>
                 <Popup>
-                  {/* {"編號：" + prop.orderId} <br /> */}
-                  {"服務項目：" + prop.service} <br />
-                  {"時間：" + prop.date}
+                  {"服務項目：" + service} <br />
+                  {"時間：" + date}
                   <br />
-                  {"地點：" + prop.location}
+                  {"地點：" + location}
                 </Popup>
               </Marker>
             );

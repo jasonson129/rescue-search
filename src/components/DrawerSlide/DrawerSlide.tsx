@@ -40,7 +40,7 @@ const DrawerSlide = (props) => {
 
   const classes = useStyles();
 
-  const handleClose = () => (event: React.KeyboardEvent | React.MouseEvent) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -70,7 +70,7 @@ const DrawerSlide = (props) => {
       variant="persistent"
       anchor="left"
       open={open}
-      onClose={handleClose()}
+      onClose={handleClose}
       classes={{ paper: classes.drawerPaper }}
     >
       {children}
