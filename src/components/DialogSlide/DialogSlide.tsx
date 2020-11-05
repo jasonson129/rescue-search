@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import { Grid, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { TransitionProps } from "@material-ui/core/transitions";
+import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement<any, any> },
@@ -22,9 +26,30 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const DialogSlide = (props) => {
+  const dispatch = useDispatch();
   const { open, setOpen, title } = props;
   const [startDate, setStartDate] = useState(new Date("2020-11-03"));
   const [endDate, setEndDate] = useState(new Date("2020-11-03"));
+
+  const fetchData = async () => {
+    axios
+      .get(
+        "https://gw.openapi.org.tw/bba1fd90-6423-11ea-9c78-6d4b75d0df63/TMS?client_id=0f978980-18c7-11eb-936f-e7de9d1d0683&client_secret=oWNVkU%2BW1PyC09PHJJjW3jXJyOy2%2BqQV5D1sARe114w%3D",
+        {
+          params: {
+            create_time_S: startDate,
+            create_time_E: endDate,
+          },
+        }
+      )
+      .then((response) => {
+        dispatch({
+          type: "FETCH_DATA",
+          payload: response.data.data,
+        });
+        handleClose();
+      });
+  };
 
   const handleStartDateChange = (date: Date) => {
     setStartDate(date);
@@ -82,7 +107,7 @@ const DialogSlide = (props) => {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={fetchData} color="primary">
           Search
         </Button>
       </DialogActions>

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_material from "@amcharts/amcharts4/themes/material";
@@ -11,58 +12,29 @@ const Chart = styled.div`
 `;
 
 const PieChart = (props) => {
-  // const { data } = props;
-  am4core.useTheme(am4themes_material);
-  am4core.useTheme(am4themes_animated);
-  let chart = am4core.create("chartdiv", am4charts.PieChart3D);
-  chart.hiddenState.properties.opacity = 0;
+  let data = useSelector((state) => state.chartData);
 
-  chart.legend = new am4charts.Legend();
+  const init = () => {
+    am4core.useTheme(am4themes_material);
+    am4core.useTheme(am4themes_animated);
+    let chart = am4core.create("chartdiv", am4charts.PieChart3D);
+    chart.hiddenState.properties.opacity = 0;
 
-  // chart.data = data;
+    chart.legend = new am4charts.Legend();
 
-  chart.data = [
-    {
-      country: "Lithuania",
-      litres: 501.9,
-    },
-    {
-      country: "Czech Republic",
-      litres: 301.9,
-    },
-    {
-      country: "Ireland",
-      litres: 201.1,
-    },
-    {
-      country: "Germany",
-      litres: 165.8,
-    },
-    {
-      country: "Australia",
-      litres: 139.9,
-    },
-    {
-      country: "Austria",
-      litres: 128.3,
-    },
-    {
-      country: "UK",
-      litres: 99,
-    },
-    {
-      country: "Belgium",
-      litres: 60,
-    },
-    {
-      country: "The Netherlands",
-      litres: 50,
-    },
-  ];
+    chart.data = data;
 
-  let series = chart.series.push(new am4charts.PieSeries3D());
-  series.dataFields.value = "litres";
-  series.dataFields.category = "country";
+    let series = chart.series.push(new am4charts.PieSeries3D());
+    series.dataFields.value = "value";
+    series.dataFields.category = "city";
+  };
+
+  useEffect(() => {
+    init();
+    return () => {
+      am4core.disposeAllCharts();
+    };
+  });
 
   return <Chart id="chartdiv" />;
 };

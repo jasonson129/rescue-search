@@ -73,6 +73,15 @@ const HeadBar = (props) => {
           >
             <SearchIcon />
           </IconButton>
+          <IconButton
+            edge="start"
+            className={classes.iconButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer()}
+          >
+            <AssessmentIcon />
+          </IconButton>
           <Typography variant="h5" color="inherit" className={classes.title}>
             Rescue
           </Typography>

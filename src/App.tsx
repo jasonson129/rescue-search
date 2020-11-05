@@ -1,17 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import HeadBar from "./components/HeadBar";
 import DrawerSlide from "./components/DrawerSlide";
 import DialogSlide from "./components/DialogSlide";
 import LeafletMap from "./components/LeafletMap";
 import PieChart from "./components/PieChart";
 import styled from "@emotion/styled";
+import axios from "axios";
 import "./App.css";
 
 const headBarHeight = 50;
 
 const App = () => {
+  let dispatch = useDispatch();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const fetchData = useCallback(
+    (startDate, endDate) => {
+      const fetchingData = async (startDate, endDate) => {
+        axios
+          .get(
+            "https://gw.openapi.org.tw/bba1fd90-6423-11ea-9c78-6d4b75d0df63/TMS?client_id=0f978980-18c7-11eb-936f-e7de9d1d0683&client_secret=oWNVkU%2BW1PyC09PHJJjW3jXJyOy2%2BqQV5D1sARe114w%3D",
+            {
+              params: {
+                create_time_S: startDate,
+                create_time_E: endDate,
+              },
+            }
+          )
+          .then((response) => {
+            dispatch({
+              type: "FETCH_DATA",
+              payload: response.data.data,
+            });
+          });
+      };
+      fetchingData(startDate, endDate);
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    console.log("useEffect");
+    fetchData("2020-01-01", "2020-10-31");
+  }, [fetchData]);
+
+  const Root = styled.div`
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+  `;
 
   const Map = styled.div`
     position: relative;
@@ -20,7 +59,7 @@ const App = () => {
   `;
 
   return (
-    <>
+    <Root>
       <HeadBar
         drawerOpen={drawerOpen}
         setDrawerOpen={setDrawerOpen}
@@ -49,7 +88,7 @@ const App = () => {
       <Map>
         <LeafletMap />
       </Map>
-    </>
+    </Root>
   );
 };
 

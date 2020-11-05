@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Drawer } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import styled from "@emotion/styled";
-import PieChart from "../PieChart";
 
 const Dragger = styled.div`
   width: 3px;
@@ -55,12 +54,15 @@ const DrawerSlide = (props) => {
     document.removeEventListener("mousemove", handleMouseMove, true);
   };
 
-  const handleMouseMove = React.useCallback((e) => {
-    const newWidth = e.clientX - document.body.offsetLeft;
-    if (newWidth >= minDrawerWidth && newWidth <= maxDrawerWidth) {
-      setDrawerWidth(newWidth);
-    }
-  }, []);
+  const handleMouseMove = useCallback(
+    (e) => {
+      const newWidth = e.clientX - document.body.offsetLeft;
+      if (newWidth >= minDrawerWidth && newWidth <= maxDrawerWidth) {
+        setDrawerWidth(newWidth);
+      }
+    },
+    [maxDrawerWidth]
+  );
 
   return (
     <Drawer
@@ -72,7 +74,6 @@ const DrawerSlide = (props) => {
       classes={{ paper: classes.drawerPaper }}
     >
       {children}
-      {/* <PieChart /> */}
       <Dragger onMouseDown={(e) => handleMouseDown(e)} />
     </Drawer>
   );
